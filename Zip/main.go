@@ -12,8 +12,8 @@ import (
 
 func main() {
 	// 源文件
-	var srcname = "file.txt"
-	var destdfile = "file.zip"
+	var srcname = "data.rar"
+	var destdfile = "data.zip"
 	if err := Zip(destdfile, srcname); err != nil {
 		log.Fatal(err)
 	}
@@ -24,7 +24,7 @@ func Zip(dest, src string) (err error) {
 	fw, err := os.Create(dest)
 	defer fw.Close()
 	if err != nil {
-		log.Fatal("文件写入错误", err)
+		log.Fatal("创建文件错误", err)
 		return err
 	}
 
@@ -47,7 +47,6 @@ func Zip(dest, src string) (err error) {
 		if err != nil {
 			return err
 		}
-		fmt.Println("数据信息：", fh.FileInfo)
 		// 替换文件信息中的文件名称
 		fh.Name = strings.TrimPrefix(path, string(filepath.Separator))
 

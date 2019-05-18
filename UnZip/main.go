@@ -9,9 +9,15 @@ import (
 	"path/filepath"
 )
 
+var (
+	err error
+	fw  *os.File
+	ir  io.ReadCloser
+)
+
 func main() {
-	var src = "file1.zip"
-	var destfile = ""
+	var src = "data.zip"
+	var destfile = "data"
 	if err := Unzip(destfile, src); err != nil {
 		log.Fatal(err)
 	}
@@ -24,7 +30,6 @@ func Unzip(dest, src string) (err error) {
 		log.Fatal("Error:", err)
 		return err
 	}
-	fmt.Println("打开文件错误", err)
 
 	if dest != "" {
 		if err := os.MkdirAll(dest, 0755); err != nil {
@@ -43,26 +48,34 @@ func Unzip(dest, src string) (err error) {
 			}
 			continue
 		}
-		fr, err := file.Open()
+		ir, err = file.Open()
 		if err != nil {
+			ir.Close()
 			log.Fatal("Error:", err)
 			return err
 		}
-		fw, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR|os.O_TRUNC, file.Mode())
+		fw, err = os.OpenFile(path, os.O_CREATE|os.O_RDWR|os.O_TRUNC, file.Mode())
 		if err != nil {
+			fClose()
 			log.Fatal("Error:", err)
 			return err
 		}
 
-		n, err := io.Copy(fw, fr)
+		n, err := io.Copy(fw, ir)
 		if err != nil {
+			fClose()
 			log.Fatal("Error:", err)
 			return err
 		}
 		fmt.Printf("成功解压 %s ,共写入了 %d 个字符的数据\n", path, n)
 
-		fw.Close()
-		fr.Close()
+		// fw.Close()
+		// ir.Close()
 	}
 	return nil
+}
+
+func fClose() {
+	fw.Close()
+	ir.Close()
 }
