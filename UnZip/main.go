@@ -1,4 +1,4 @@
-package main
+package unzip
 
 import (
 	"archive/zip"
@@ -15,13 +15,13 @@ var (
 	ir  io.ReadCloser
 )
 
-func main() {
+/* func main() {
 	var src = "data.zip"
 	var destfile = "data"
 	if err := Unzip(destfile, src); err != nil {
 		log.Fatal(err)
 	}
-}
+} */
 
 func Unzip(dest, src string) (err error) {
 	zr, err := zip.OpenReader(src)

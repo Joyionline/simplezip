@@ -1,4 +1,4 @@
-package main
+package zip
 
 import (
 	"archive/zip"
@@ -10,14 +10,16 @@ import (
 	"strings"
 )
 
-func main() {
+/* func main() {
+	// flag.String("D", "/home","dbd")
+
 	// 源文件
 	var srcname = "data.rar"
 	var destdfile = "data.zip"
 	if err := Zip(destdfile, srcname); err != nil {
 		log.Fatal(err)
 	}
-}
+} */
 
 func Zip(dest, src string) (err error) {
 	// 创建准备写入的文件
