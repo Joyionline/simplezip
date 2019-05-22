@@ -14,9 +14,6 @@ func main() {
 	srcname := flag.String("srcname", "", "file name")
 	target := flag.String("target", "", "target file  name")
 	flag.Parse()
-	// fmt.Println("接收到的命令：", *f)
-	// fmt.Println("源文件：", *srcname)
-	// fmt.Println("目标文件：", *target)
 	if *srcname == "" || *operate == "" {
 		fmt.Println("请输入正确的参数")
 		return
